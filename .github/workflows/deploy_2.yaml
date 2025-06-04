@@ -5,23 +5,14 @@ on: push
 jobs:
   first_job:
     runs-on: ubuntu-latest
-    env:
-      NAME: CodigoFacilito
+    
     steps:
-      - name: Working directory
-        run: ls -al
+      - name: Generar archivo
+        run: |
+          echo "Archivo prueba, hola" >> test.log
 
-      - name: Action
-        uses: actions/checkout@v4
-
-      - name: Working directory after action
-        run: ls -al
-
-  second_job:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs: first_job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hola Mundo
-        run: echo "Hola Mundo Segundo"
-  
+      - name: Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: archivo-test´
+          path: test.log
